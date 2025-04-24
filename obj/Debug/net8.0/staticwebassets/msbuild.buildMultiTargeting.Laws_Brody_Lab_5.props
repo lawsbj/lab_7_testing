@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Laws_Brody_Lab_5.props" />
+</Project>

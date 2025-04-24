@@ -1,0 +1,55 @@
+﻿@page "/list-books"
+@using Laws_Brody_Lab_5.Services;
+@using Laws_Brody_Lab_5.Components;
+@using Laws_Brody_Lab_5.Models;
+@inject NavigationManager Nav
+@inject ILibraryService lib
+@rendermode InteractiveServer
+
+<PageTitle>List Borrowed Books</PageTitle>
+
+<h1>List Borrowed Books</h1>
+
+<div>
+
+    @if(lib.BorrowedBooks.Any())
+    {
+        <ul>
+            @foreach (var record in lib.BorrowedBooks)
+            {
+                <li>
+                    @record.Key.Name has the following books borrowed:
+                    <ul>
+                        @foreach (Book book in record.Value)
+                        {
+                            <li>
+                                @book.Title by @book.Author
+                            </li>
+                        }
+                    </ul>
+                </li>  
+            }
+        </ul>
+        
+    }
+    else
+    {
+        <div>
+            There are currently no books borrowed. 
+        </div>
+    }
+
+</div>
+
+
+
+
+<div>
+    <button @onclick=Home class="btn btn-blue">Go Back to Home Page</button>
+</div>
+@code {
+    private void Home()
+    {
+        Nav.NavigateTo("/");
+    }
+}

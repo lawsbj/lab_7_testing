@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Laws_Brody_Lab_5.props" />
+</Project>
