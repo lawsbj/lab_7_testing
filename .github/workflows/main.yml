@@ -36,7 +36,7 @@ jobs:
 
       Solution_Name: Laws_Brody_Lab_5.sln
 
-      Test_Project_Path: lab_7_testing/Lab_5_Testing.csproj
+      Test_Project_Path: lab_tests/Lab_5_Testing.csproj
 
  
 
