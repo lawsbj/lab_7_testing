@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\School\\Server Side Programming ( Kill me )\\lab_7_Laws_Brody\\lab 6\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Laws_Brody_Lab_5.bundle.scp.css",
+      "PackagePath": "staticwebassets\\Laws_Brody_Lab_5.io10ubiltv.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\School\\Server Side Programming ( Kill me )\\lab_7_Laws_Brody\\lab 6\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\School\\Server Side Programming ( Kill me )\\lab_7_Laws_Brody\\lab 6\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\School\\Server Side Programming ( Kill me )\\lab_7_Laws_Brody\\lab 6\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\School\\Server Side Programming ( Kill me )\\lab_7_Laws_Brody\\lab 6\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Laws_Brody_Lab_5.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Laws_Brody_Lab_5.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Laws_Brody_Lab_5.props",
+      "PackagePath": "build\\Laws_Brody_Lab_5.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Laws_Brody_Lab_5.props",
+      "PackagePath": "buildMultiTargeting\\Laws_Brody_Lab_5.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Laws_Brody_Lab_5.props",
+      "PackagePath": "buildTransitive\\Laws_Brody_Lab_5.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

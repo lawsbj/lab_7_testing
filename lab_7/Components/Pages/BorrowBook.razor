@@ -1,0 +1,109 @@
+﻿@page "/borrow-books"
+@using Laws_Brody_Lab_5.Services;
+@using Laws_Brody_Lab_5.Components;
+@using Laws_Brody_Lab_5.Models;
+@inject NavigationManager Nav
+@inject ILibraryService lib
+@rendermode InteractiveServer
+
+<PageTitle>Borrow Books</PageTitle>
+
+<h1>Borrow Books</h1>
+
+
+@if(pickUserBorrowing == true)
+{
+    <div>Click the user that is borrwing a book.</div>
+    @foreach (User user in lib.Users)
+    {
+        <button class="btn btn-danger" style="display:block" @onclick="@(() => PickUser(user))">User ID: @user.Id. User Name: @user.Name User Email: @user.Email</button>
+    }
+}
+
+@if (pickBookBorrowing == true)
+{
+    <div>Click the Book you desire to borrow.</div>
+    @foreach (Book Book in lib.Books)
+    {
+        <button class="btn btn-danger" style="display:block" @onclick="@(() => PickBook(Book))">Book ID: @Book.Id. Book Title: @Book.Title Book Author: @Book.Author</button>
+    }
+}
+
+@if (pickBookBorrowing == false && pickUserBorrowing == false && successMessage == false)
+{
+    <div>
+        <button @onclick=BookBorrow class="btn btn-blue">Press me to borrow selected book with selected user</button>
+    </div>
+}
+@if (successMessage == true)
+{
+    <div>
+        The book has been borrowed.
+    </div>
+}else
+{
+    <div>
+        <button @onclick=Home class="btn btn-blue">Go Back to Home Page</button>
+    </div>
+}
+
+
+
+@code {
+    bool pickUserBorrowing = true;
+    bool pickBookBorrowing = false;
+    bool successMessage = false;
+
+    User userWhoBorrow;
+    Book bookToBorrow;
+
+
+
+
+
+
+
+    // actual functions
+
+    private void PickUser(User user)
+    {
+        userWhoBorrow = user;
+        pickUserBorrowing = false;
+        pickBookBorrowing = true;
+    }
+
+    private void PickBook(Book book)
+    {
+        bookToBorrow = book;
+        pickBookBorrowing = false;
+    }
+
+    // cant name it borrow book cause page already has the name so enjoy book borrow
+    private void BookBorrow()
+    {
+        pickBookBorrowing = false;
+        successMessage = true;
+        lib.Books.Remove(bookToBorrow);
+
+        if(lib.BorrowedBooks.ContainsKey(userWhoBorrow))
+        {
+            lib.BorrowedBooks[userWhoBorrow].Append(bookToBorrow);
+        }
+        else
+        {
+            List<Book> booksToAdd = new List<Book>();
+            booksToAdd.Add(bookToBorrow);
+            lib.BorrowedBooks.Add(userWhoBorrow, booksToAdd);
+        }
+
+        
+        
+
+        Nav.NavigateTo("/borrow-books", forceLoad: true);
+    }
+
+    private void Home()
+    {
+        Nav.NavigateTo("/");
+    }
+}
