@@ -1,0 +1,248 @@
+﻿@page "/manage-books"
+@using Laws_Brody_Lab_5.Services;
+@using Laws_Brody_Lab_5.Components;
+@using Laws_Brody_Lab_5.Models;
+@inject NavigationManager Nav
+@inject ILibraryService lib
+@rendermode InteractiveServer
+
+<PageTitle>Manage Books</PageTitle>
+
+<h1>Manage Books</h1>
+
+<h2>Select a option below</h2>
+@if (hideMainOptions == false)
+{
+    <div>
+        <button @onclick=ShowAddBook class="btn btn-blue">Add Book</button>
+        <button @onclick=ShowDeleteBook class="btn btn-blue">Delete Book</button>
+        <button @onclick=ShowEditBook class="btn btn-blue">Edit Book</button>
+        <button @onclick=ShowListBooks class="btn btn-blue">List Books</button>
+    </div>
+}
+
+
+@if (hideAddBook == false)
+{
+    <form class="submit-box" @onsubmit=SubmitAdd>
+        <label for="Title">Title</label>
+        <input id="Title" type="text" @bind="createTitle" required />
+
+        <label for="author">Author</label>
+        <input id="author" type="text" @bind="createBookAuthor" required />
+
+        <label for="isbn">ISBN</label>
+        <input id="isbn" type="text" @bind="createBookISBN" required/>
+
+        <button type="submit">Submit</button>
+    </form>
+}
+@if (hideDeleteBook == false)
+{
+    <div>Click the Book you desire to delete.</div>
+    @foreach (Book Book in lib.Books)
+    {
+        <button class="btn btn-danger" style="display:block" @onclick="@(() => DeleteBook(Book))">Book ID: @Book.Id. Book Title: @Book.Title Book Author: @Book.Author</button>
+    }
+}
+@if (hideEditBook == false)
+{
+    if (hideBookToEdit == false)
+    {
+        <div>Click the Book you desire to edit.</div>
+        @foreach (Book Book in lib.Books)
+        {
+            <button class="btn btn-danger" style="display:block" @onclick="@(() => PickBook(Book))">Book ID: @Book.Id. Book Title: @Book.Title Book Author: @Book.Author</button>
+        }
+    }
+    if (showEditProcess == true)
+    {
+        <form class="submit-box" @onsubmit=SubmitEdit>
+            <label for="Title">New Book Title(leave blank to not change it)</label>
+            <input id="Title" type="text" @bind="newTitle" />
+
+            <label for="author">New Author(leave blank to not change it)</label>
+            <input id="author" type="text" @bind="newAuthor" />
+
+            <label for="isbn">New ISBN(leave blank to not change it)</label>
+            <input id="isbn" type="text" @bind="newISBN" />
+
+            <button type="submit">Submit</button>
+        </form>
+    }
+}
+@if (hideListBooks == false)
+{
+    @foreach (Book Book in lib.Books)
+    {
+        <div style="display:block">Book ID: @Book.Id. Book Title: @Book.Title Book Author: @Book.Author Book ISBN: @Book.ISBN</div>
+    }
+}
+
+@if (successMessage == true)
+{
+    <div>
+        Your task was successful.
+    </div>
+}
+else
+{
+    <div>
+        <button @onclick=Home class="btn btn-blue">Go Back to Home Page</button>
+    </div>
+}
+
+
+@code {
+    bool hideMainOptions = false;
+    bool hideAddBook = true;
+    bool hideDeleteBook = true;
+    bool hideEditBook = true;
+    bool hideListBooks = true;
+
+    bool hideBookToEdit = true;
+    bool showEditProcess = false;
+
+    bool successMessage = false;
+
+    int BookToEditId;
+    string newTitle = "";
+    string newAuthor = "";
+    string newISBN = "";
+
+    string createTitle;
+    string createBookAuthor;
+    string createBookISBN;
+
+
+
+    // navigation
+    private void Home()
+    {
+        Nav.NavigateTo("/");
+    }
+
+    // methods use to hide/show elements
+    //add Book
+    private void ShowAddBook()
+    {
+        hideMainOptions = true;
+        hideAddBook = false;
+
+    }
+    private void HideAddBook()
+    {
+        hideMainOptions = false;
+        hideAddBook = true;
+    }
+    //delete Book
+    private void ShowDeleteBook()
+    {
+        hideMainOptions = true;
+        hideDeleteBook = false;
+    }
+    private void HideDeleteBook()
+    {
+        hideMainOptions = false;
+        hideDeleteBook = true;
+    }
+    // edit Book
+    private void ShowEditBook()
+    {
+        hideMainOptions = true;
+        hideEditBook = false;
+        hideBookToEdit = false;
+    }
+    private void HideEditBook()
+    {
+        hideMainOptions = false;
+        hideEditBook = true;
+        hideBookToEdit = true;
+    }
+
+    // list of Books
+    private void ShowListBooks()
+    {
+        hideMainOptions = true;
+        hideListBooks = false;
+    }
+    private void HideListBooks()
+    {
+        hideMainOptions = false;
+        hideListBooks = true;
+    }
+    // actual functions
+    private void AddBook(Book Book)
+    {
+        lib.AddBook(Book.Title,Book.Author, Book.ISBN );
+    }
+    private void DeleteBook(Book Book)
+    {
+        lib.DeleteBook(Book.Id);
+        HideDeleteBook();
+
+        successMessage = true;
+        
+        Success();
+    }
+    private void EditBook(int id, string updatedTitle, string updatedAuthor, string updatedISBN)
+    {
+        hideBookToEdit = true;
+        hideEditBook = true;
+        showEditProcess = false;
+        lib.EditBook(id, updatedTitle, updatedAuthor, updatedISBN);
+
+        newTitle = "";
+        newAuthor = "";
+        newISBN = "";
+    }
+    private void SubmitEdit()
+    {
+        Book Book = lib.Books.FirstOrDefault(u => u.Id == BookToEditId);
+
+        if (newTitle == "")
+        {
+            newTitle = Book.Title;
+        }
+        if (newAuthor == "")
+        {
+            newAuthor = Book.Author;
+        }
+        if (newISBN == "")
+        {
+            newISBN = Book.ISBN;
+        }
+        EditBook(Book.Id, newTitle, newAuthor, newISBN);
+        HideEditBook();
+
+        successMessage = true;
+        
+        Success();
+    }
+    private void PickBook(Book Book)
+    {
+        hideBookToEdit = true;
+        BookToEditId = Book.Id;
+        showEditProcess = true;
+    }
+
+    private void SubmitAdd()
+    {
+        lib.AddBook(createTitle, createBookAuthor, createBookISBN);
+        createTitle = "";
+        createBookAuthor = "";
+        createBookISBN = "";
+        HideAddBook();
+
+        successMessage = true;
+        
+        Success();
+    }
+
+    private void Success()
+    {
+        successMessage = true;
+
+        Nav.NavigateTo("/manage-books", forceLoad: true);
+    }
+}

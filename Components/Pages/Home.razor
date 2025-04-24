@@ -1,0 +1,48 @@
+﻿@page "/"
+@using Laws_Brody_Lab_5.Services;
+@using Laws_Brody_Lab_5.Components;
+@using Laws_Brody_Lab_5.Models;
+@inject NavigationManager Nav
+@inject ILibraryService lib
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<h1>Library Management System</h1>
+
+<h2>Select a option below</h2>
+
+<div>
+    <button @onclick=ManageBooks class="btn btn-blue">Manage Books</button>
+    <button @onclick=ManageUsers class ="btn btn-blue">Manage Users</button>
+    <button @onclick=BorrowBook class="btn btn-blue">Borrow Book</button>
+    <button @onclick=ReturnBooks class ="btn btn-blue">Return Book</button>
+    <button @onclick=ListBorrowedBooks class="btn btn-blue">List Borrowed Books</button>
+</div>
+
+
+
+
+@code {
+
+    private void ManageBooks()
+    {
+        Nav.NavigateTo("/manage-books");
+    }
+    private void ManageUsers()
+    {
+        Nav.NavigateTo("/manage-users");
+    }
+    private void BorrowBook()
+    {
+        Nav.NavigateTo("/borrow-books");
+    }
+    private void ReturnBooks()
+    {
+        Nav.NavigateTo("/return-books");
+    }
+    private void ListBorrowedBooks()
+    {
+        Nav.NavigateTo("/list-books");
+    }
+} 
